@@ -21,4 +21,3 @@ def create_app():
     create_dash(server)
 
     return server
-

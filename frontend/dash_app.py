@@ -9,10 +9,12 @@ from .cfa import layout as cfa_layout
 from .stockist import layout as stockist_layout
 
 
+
 def create_dash(server):
     """Factory to create Dash app and attach to given Flask server."""
     dash_app = Dash(__name__, server=server, url_base_pathname="/dashboard/")
     dash_app.layout = html.Div([
+
         dcc.Location(id="url"),
         html.Div(id="page-content"),
     ])
@@ -29,5 +31,6 @@ def create_dash(server):
             html.H1("Pharma SCM Dashboard"),
             html.P("Select a dashboard page."),
         ])
+
 
     return dash_app
