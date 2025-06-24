@@ -1,7 +1,7 @@
 
 # Pharma SCM Application
 
-Version: 0.2.2
+Version: 0.2.3
 
 This project implements an initial prototype for the pharmaceutical supply chain management app described in `dbsetup.md`.
 
@@ -14,6 +14,7 @@ This project implements an initial prototype for the pharmaceutical supply chain
 - Added multipage Dash dashboards for manufacturer, CFA, and stockist.
 - Now reads `DATABASE_URL` from environment for DB connection.
 - Added `/api/version` endpoint to report backend version.
+- Added `ubuntu_setup.sh` for quick demo setup.
 
 ## Quick Start
 
@@ -57,3 +58,15 @@ This project implements an initial prototype for the pharmaceutical supply chain
    ```
 
 If `DATABASE_URL` is not set, SQLite database `pharma.db` will be created automatically in the project root.
+
+## Ubuntu Setup Script
+
+For convenience a setup helper is included. It installs dependencies,
+launches the backend, and uses `curl` to register a new manufacturer and product.
+
+```bash
+./ubuntu_setup.sh
+```
+
+The script logs in with the seeded admin user, creates organization `MANUF_EXTRA`,
+and adds product `TEST123` under that organization.
