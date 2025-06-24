@@ -17,3 +17,4 @@
 The application uses Flask as the API layer (now with bearer-token authentication) and Dash for the UI. SQLAlchemy manages the database configured through the `DATABASE_URL` environment variable (defaulting to SQLite). Multiple dashboards (manufacturer, CFA, stockist) connect via authenticated REST calls.
 
 - Added `/api/version` to expose backend version for UI checks.
+- Added `/api/batches` for batch tracking operations.

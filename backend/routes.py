@@ -7,6 +7,7 @@ from .database import SessionLocal
 from . import models
 import uuid
 import hashlib
+from datetime import date
 
 # In-memory token store for demo purposes
 tokens = {}
@@ -126,6 +127,51 @@ def create_product():
     session.add(prod)
     session.commit()
     return jsonify({"product_id": prod.product_id}), 201
+
+
+@api_bp.route("/batches", methods=["POST"])
+@require_auth(role="Manufacturer")
+def create_batch():
+    """Register a production batch.
+
+    WHY: allow manufacturers to track batches for recall and inventory.
+    WHAT: closes #batch-endpoints
+    HOW: extend with more fields or delete to roll back.
+    """
+    data = request.get_json() or {}
+    session = SessionLocal()
+    batch = models.Batch(
+        batch_id=data.get("batch_id") or str(uuid.uuid4()),
+        product_id=data.get("product_id"),
+        batch_number=data.get("batch_number"),
+        manufacturing_date=data.get("manufacturing_date"),
+        expiry_date=data.get("expiry_date"),
+        manufacturing_site_name=data.get("manufacturing_site_name"),
+        quality_control_status=data.get("quality_control_status", "Released"),
+    )
+    session.add(batch)
+    session.commit()
+    return jsonify({"batch_id": batch.batch_id}), 201
+
+
+@api_bp.route("/batches", methods=["GET"])
+@require_auth()
+def list_batches():
+    """List all batches for reference."""
+    session = SessionLocal()
+    batches = session.query(models.Batch).all()
+    return jsonify([
+        {
+            "batch_id": b.batch_id,
+            "product_id": b.product_id,
+            "batch_number": b.batch_number,
+            "manufacturing_date": b.manufacturing_date.isoformat() if b.manufacturing_date else None,
+            "expiry_date": b.expiry_date.isoformat() if b.expiry_date else None,
+            "manufacturing_site_name": b.manufacturing_site_name,
+            "quality_control_status": b.quality_control_status,
+        }
+        for b in batches
+    ])
 
 
 @api_bp.route("/inventory", methods=["POST"])

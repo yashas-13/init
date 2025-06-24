@@ -7,6 +7,7 @@ HOW: Extend with more sample batches. Roll back by removing this file.
 """
 
 import uuid
+from datetime import date
 from .database import SessionLocal
 from . import models
 from .routes import hash_password
@@ -70,6 +71,16 @@ def seed_data():
         manufacturer_org_id="MANUF1",
     )
     session.add(prod)
+
+    batch = models.Batch(
+        batch_id="BATCH1",
+        product_id="PROD1",
+        batch_number="PR001-001",
+        manufacturing_date=date(2023, 1, 1),
+        expiry_date=date(2025, 1, 1),
+        manufacturing_site_name="Plant 1",
+    )
+    session.add(batch)
 
     session.commit()
     session.close()
