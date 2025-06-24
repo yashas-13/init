@@ -1,6 +1,7 @@
 """Flask routes exposing basic CRUD operations and authentication."""
 
 from flask import Blueprint, request, jsonify, g
+from .version import VERSION
 from sqlalchemy.orm import Session
 from .database import SessionLocal
 from . import models
@@ -55,6 +56,17 @@ def login():
     token = str(uuid.uuid4())
     tokens[token] = user.user_id
     return jsonify({"token": token})
+
+
+@api_bp.route("/version", methods=["GET"])
+def get_version():
+    """Return backend version.
+
+    WHY: allow clients to verify API compatibility.
+    WHAT: closes #improve-readme
+    HOW: update VERSION constant or remove route to roll back.
+    """
+    return jsonify({"version": VERSION})
 
 
 @api_bp.route("/organizations", methods=["POST"])
