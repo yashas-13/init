@@ -1,0 +1,4 @@
+Flask==2.2.5
+Dash==2.14.2
+SQLAlchemy==2.0.23
+pandas==2.1.4
