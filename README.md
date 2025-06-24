@@ -1,7 +1,7 @@
 
 # Pharma SCM Application
 
-Version: 0.2.3
+Version: 0.2.4
 
 This project implements an initial prototype for the pharmaceutical supply chain management app described in `dbsetup.md`.
 
@@ -15,6 +15,7 @@ This project implements an initial prototype for the pharmaceutical supply chain
 - Now reads `DATABASE_URL` from environment for DB connection.
 - Added `/api/version` endpoint to report backend version.
 - Added `ubuntu_setup.sh` for quick demo setup.
+- Added `/api/batches` endpoints for creating and listing batches.
 
 ## Quick Start
 
@@ -55,6 +56,16 @@ This project implements an initial prototype for the pharmaceutical supply chain
         -H "Authorization: Bearer $TOKEN" \
         -H 'Content-Type: application/json' \
         -d '{"name": "Pain Reliever", "sku": "PR001", "manufacturer_org_id": "MANUF1"}'
+
+   # create a production batch
+   curl -X POST http://localhost:5055/api/batches \
+        -H "Authorization: Bearer $TOKEN" \
+        -H 'Content-Type: application/json' \
+        -d '{"product_id": "PROD1", "batch_number": "PR001-001"}'
+
+   # list all batches
+   curl http://localhost:5055/api/batches \
+        -H "Authorization: Bearer $TOKEN"
    ```
 
 If `DATABASE_URL` is not set, SQLite database `pharma.db` will be created automatically in the project root.
