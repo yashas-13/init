@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# SQLite database
+*.db
+
+# virtual environments
+venv/
+
+# dash build
+frontend/__pycache__/
+
