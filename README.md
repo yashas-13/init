@@ -1,9 +1,9 @@
 
 # Pharma SCM Application
 
-Version: 0.2.1
+Version: 0.2.2
 
-This project implements an initial prototype for the pharmaceutical supply chain management app described in `Pharmaceutical Supply Chain App Design_.md` and `dbsetup.md`.
+This project implements an initial prototype for the pharmaceutical supply chain management app described in `dbsetup.md`.
 
 ## Today's Changes
 
@@ -13,6 +13,7 @@ This project implements an initial prototype for the pharmaceutical supply chain
 - Implemented role-based access on sensitive routes.
 - Added multipage Dash dashboards for manufacturer, CFA, and stockist.
 - Now reads `DATABASE_URL` from environment for DB connection.
+- Added `/api/version` endpoint to report backend version.
 
 ## Quick Start
 
@@ -28,22 +29,28 @@ This project implements an initial prototype for the pharmaceutical supply chain
    pip install -r requirements.txt
    ```
 
-3. Run the server:
+3. Run the server (optional port arg):
 
    ```bash
-   python -m backend.run
+   python -m backend.run 5055
    ```
 
-4. Obtain a token and create a product (example):
+4. Check the backend version:
+
+   ```bash
+   curl http://localhost:5055/api/version
+   ```
+
+5. Obtain a token and create a product (example):
 
    ```bash
    # login with seeded admin user
-   curl -X POST http://localhost:5000/api/login \
+   curl -X POST http://localhost:5055/api/login \
         -H 'Content-Type: application/json' \
         -d '{"email": "admin@pharma.com", "password": "adminpass"}'
 
    # set TOKEN from response and create product
-   curl -X POST http://localhost:5000/api/products \
+   curl -X POST http://localhost:5055/api/products \
         -H "Authorization: Bearer $TOKEN" \
         -H 'Content-Type: application/json' \
         -d '{"name": "Pain Reliever", "sku": "PR001", "manufacturer_org_id": "MANUF1"}'
