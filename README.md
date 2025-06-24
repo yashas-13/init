@@ -1,7 +1,7 @@
 
 # Pharma SCM Application
 
-Version: 0.2.0
+Version: 0.2.1
 
 This project implements an initial prototype for the pharmaceutical supply chain management app described in `Pharmaceutical Supply Chain App Design_.md` and `dbsetup.md`.
 
@@ -12,22 +12,29 @@ This project implements an initial prototype for the pharmaceutical supply chain
 - Created endpoints for users, products, inventory, requests, approvals, and audit logs.
 - Implemented role-based access on sensitive routes.
 - Added multipage Dash dashboards for manufacturer, CFA, and stockist.
+- Now reads `DATABASE_URL` from environment for DB connection.
 
 ## Quick Start
 
-1. Install dependencies:
+1. (Optional) set a custom database URL:
+
+   ```bash
+   export DATABASE_URL=sqlite:///pharma.db
+   ```
+
+2. Install dependencies:
 
    ```bash
    pip install -r requirements.txt
    ```
 
-2. Run the server:
+3. Run the server:
 
    ```bash
    python -m backend.run
    ```
 
-3. Obtain a token and create a product (example):
+4. Obtain a token and create a product (example):
 
    ```bash
    # login with seeded admin user
@@ -42,4 +49,4 @@ This project implements an initial prototype for the pharmaceutical supply chain
         -d '{"name": "Pain Reliever", "sku": "PR001", "manufacturer_org_id": "MANUF1"}'
    ```
 
-SQLite database `pharma.db` will be created automatically in the project root.
+If `DATABASE_URL` is not set, SQLite database `pharma.db` will be created automatically in the project root.

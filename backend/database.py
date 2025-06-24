@@ -2,10 +2,14 @@
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
+import os
 
-DATABASE_URL = "sqlite:///pharma.db"
+# WHY: let deployments configure the DB without changing code
+# WHAT: closes #config-db-url
+# HOW: extend by using a PostgreSQL URI; roll back by hardcoding
+DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///pharma.db")
 
-# Engine created for SQLite database
+# Engine created for configured database (defaults to SQLite)
 engine = create_engine(DATABASE_URL, echo=False, future=True)
 
 # Session factory for database operations
