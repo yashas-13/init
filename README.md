@@ -1,15 +1,17 @@
+
 # Pharma SCM Application
 
-Version: 0.1.0
+Version: 0.2.0
 
 This project implements an initial prototype for the pharmaceutical supply chain management app described in `Pharmaceutical Supply Chain App Design_.md` and `dbsetup.md`.
 
 ## Today's Changes
 
-- Added Flask/Dash backend with SQLite database models.
-- Implemented `/api/organizations` endpoint for creating organizations.
-- Provided minimal Dash UI placeholder.
-- Included database initialization on startup.
+- Seeded database with sample organizations, users, and a product.
+- Added authentication with `/api/login` and bearer tokens.
+- Created endpoints for users, products, inventory, requests, approvals, and audit logs.
+- Implemented role-based access on sensitive routes.
+- Added multipage Dash dashboards for manufacturer, CFA, and stockist.
 
 ## Quick Start
 
@@ -25,12 +27,19 @@ This project implements an initial prototype for the pharmaceutical supply chain
    python -m backend.run
    ```
 
-3. Create an organization (example using `curl`):
+3. Obtain a token and create a product (example):
 
    ```bash
-   curl -X POST http://localhost:5000/api/organizations \
+   # login with seeded admin user
+   curl -X POST http://localhost:5000/api/login \
         -H 'Content-Type: application/json' \
-        -d '{"name": "Test Org", "type": "Manufacturer"}'
+        -d '{"email": "admin@pharma.com", "password": "adminpass"}'
+
+   # set TOKEN from response and create product
+   curl -X POST http://localhost:5000/api/products \
+        -H "Authorization: Bearer $TOKEN" \
+        -H 'Content-Type: application/json' \
+        -d '{"name": "Pain Reliever", "sku": "PR001", "manufacturer_org_id": "MANUF1"}'
    ```
 
 SQLite database `pharma.db` will be created automatically in the project root.

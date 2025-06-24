@@ -2,7 +2,9 @@
 
 ```
 +-------------------+     HTTP     +-------------------+
-|   Dash Frontend   | <---------> |    Flask API      |
+
+|   Dash Frontend   | <---------> |    Flask API w/ Auth|
+
 +-------------------+             +-------------------+
         |                                   |
         | SQLAlchemy ORM                    |
@@ -12,4 +14,4 @@
 +-------------------+             +-------------------+
 ```
 
-The application uses Flask as the API layer and Dash for the UI. SQLAlchemy manages the SQLite database described in `dbsetup.md`.
+The application uses Flask as the API layer (now with bearer-token authentication) and Dash for the UI. SQLAlchemy manages the SQLite database described in `dbsetup.md`. Multiple dashboards (manufacturer, CFA, stockist) connect via authenticated REST calls.
